@@ -1,12 +1,18 @@
 public class LeetCodeFindRotatedSortedArray {
     public static void main(String[] args) {
-        int[] arr = {4,5,6,0,1,2,3};
+        int[] arr = {0,1,2,3};
         int target = 3;
         int pivotElement = pivot(arr);
         System.out.println(pivotElement);
-        int firstTry = binarySearch(arr, target, 0, pivotElement);
-        if (firstTry==-1) {
-            firstTry=binarySearch(arr, target, pivotElement+1, arr.length-1);
+        int firstTry;
+        // if pivot == -1 no pivot array not rotated
+        if (pivotElement==-1) {
+            firstTry=binarySearch(arr, target, 0, arr.length-1);    
+        }else{
+            firstTry = binarySearch(arr, target, 0, pivotElement);
+            if (firstTry==-1) {
+                firstTry=binarySearch(arr, target, pivotElement+1, arr.length-1);
+            }
         }
         System.out.println(firstTry);
     }
