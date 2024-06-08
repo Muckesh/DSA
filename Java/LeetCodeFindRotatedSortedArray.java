@@ -1,20 +1,29 @@
 public class LeetCodeFindRotatedSortedArray {
     public static void main(String[] args) {
-        int[] arr = {0,1,2,3};
-        int target = 3;
+        int[] arr = {4,6,8,9,10,0,1,2,3};
+        int target = 4;
+        
+        int ans = search(arr, target);
+
+        System.out.println(ans);
+    }
+
+    static int search(int[] arr,int target){
         int pivotElement = pivot(arr);
         System.out.println(pivotElement);
-        int firstTry;
-        // if pivot == -1 no pivot array not rotated
         if (pivotElement==-1) {
-            firstTry=binarySearch(arr, target, 0, arr.length-1);    
-        }else{
-            firstTry = binarySearch(arr, target, 0, pivotElement);
-            if (firstTry==-1) {
-                firstTry=binarySearch(arr, target, pivotElement+1, arr.length-1);
-            }
+            return binarySearch(arr, target, 0, arr.length-1);
         }
-        System.out.println(firstTry);
+
+        if (arr[pivotElement]==target) {
+            return pivotElement;
+        }
+
+        if (arr[0]<=target) {
+            return binarySearch(arr, target, 0, pivotElement-1);
+        }
+
+        return binarySearch(arr, target, pivotElement+1, arr.length-1);
     }
 
     static int pivot(int[] arr){
@@ -31,7 +40,10 @@ public class LeetCodeFindRotatedSortedArray {
             if (arr[start]>=arr[mid]) {
                 end=mid-1;
             }
-            if (arr[start]<arr[mid]) {
+            // if (arr[start]<arr[mid]) {
+            //     start=mid+1;
+            // }
+            else {
                 start=mid+1;
             }
         }
